@@ -24,10 +24,10 @@ function debounce(fn, delay) {
 
 应用场景：
 
--   通过监听 scroll 事件，检测滚动位置，根据滚动位置显示返回顶部按钮
--   通过监听 resize 事件，对某些自适应页面调整 DOM 的渲染
--   通过监听 keyup 事件，监听文字输入并调用接口进行模糊匹配或校验
--   ......
+- 通过监听 scroll 事件，检测滚动位置，根据滚动位置显示返回顶部按钮
+- 通过监听 resize 事件，对某些自适应页面调整 DOM 的渲染
+- 通过监听 keyup 事件，监听文字输入并调用接口进行模糊匹配或校验
+- ......
 
 不足之处：
 
@@ -37,26 +37,33 @@ function debounce(fn, delay) {
 
 预期效果：执行事件处理函数之后在一定时间内无法再次执行，只有过了规定时间间隔后才能进行下一次的调用（相当于加锁操作）。
 
-实现原理：第一次触发事件时执行事件处理函数，而当再次触发事件时则清除延时操作，并判断是否已经过了预设的周期间隔，是则再次执行事件处理函数，否则设置延迟时间为周期间隔的延时操作执行事件处理函数。
+实现原理：第一次触发事件时执行事件处理函数，而当再次触发事件时则判断是否已经过了预设的周期间隔，是则再次执行事件处理函数，否则设置延迟时间为周期间隔的延时操作执行事件处理函数。
 
 简单实现：
 
 ```javascript
-function throttle(fn, cycle) {
-    let start = Date.now();
-    let now;
-    let timer;
+function throttle(fn, delay) {
+    let timer = null,
+        remaining = 0,
+        previous = new Date();
     return function() {
-        now = Date.now();
-        clearTimeout(timer);
-        if (now - start >= cycle) {
+        let now = new Date();
+        remaining = now - previous;
+        if (remaining >= delay) {
+            timer && clearTimeout(timer);
+            timer = null;
             fn.apply(this, arguments);
-            start = now;
+            previous = now;
         } else {
-            timer = setTimeout(() => {
-                fn.apply(this, arguments);
-            }, cycle);
+            if (!timer) {
+                timer = setTimeout(function() {
+                    fn.apply(this, arguments);
+                    previous = new Date();
+                }, delay - remaining);
+            }
         }
     };
 }
 ```
+
+应用场景：在监听事件过程中一些需要实时执行的方法（如图片懒加载）
