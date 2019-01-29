@@ -56,7 +56,7 @@ function throttle(fn, delay) {
             previous = now;
         } else {
             if (!timer) {
-                timer = setTimeout(function() {
+                timer = setTimeout(() => {
                     fn.apply(this, arguments);
                     previous = new Date();
                 }, delay - remaining);
@@ -64,6 +64,7 @@ function throttle(fn, delay) {
         }
     };
 }
+// 注意throttle函数内的this指向并非window，谁调用throttle就指向谁，如果需要让他指向window，可以定义变量context = this，然后将context作为第一个参数传入fn.apply
 ```
 
 应用场景：在监听事件过程中一些需要实时执行的方法（如图片懒加载）
