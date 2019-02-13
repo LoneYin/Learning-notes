@@ -1,0 +1,35 @@
+# JavaScript 中单例设计模式的应用
+
+## 用单例模式实现数据的缓存
+
+假如有这样的一个函数
+
+```javascript
+function computed(str) {
+    // 假设中间的计算非常耗时
+    console.log('2000s have passed');
+    return 'result';
+}
+```
+
+我们希望将运算结果缓存起来，第二次调用的时候直接读取缓存中的内容，我们可以怎么做呢？
+
+```javascript
+function cached(fn) {
+    const cache = Object.create(null);
+    return function cachedFn(str) {
+        if (!cache[str]) {
+            cache[str] = fn(str);
+        }
+        return cache[str];
+    };
+}
+
+var cachedComputed = cached(computed);
+cachedComputed('string');
+// 打印 2000s have passed
+cachedComputed('string');
+// 不再打印
+```
+
+上述代码用闭包缓存计算结果，用单例思想避免了重复计算
