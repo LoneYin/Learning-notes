@@ -106,19 +106,13 @@ DOM3级还定义了自定义事件，自定义事件不是由DOM原生触发的�
 示例如下：
 
 ```javascript
-const div = document.getElementById("myDiv");
-
-EventUtil.addEventHandler(div, "myEvent", () => {
+button.addEventListener("myEvent", () => {
 　　alert("div myEvent!")
-})
-
-EventUtil.addEventHandler(document, "myEvent", () => {
-　　alert("document myEvent!")
 })
 
 if (document.implementation.hasFeature("CustomEvents", "3.0")) {
 　　const e = document.createEvent("CustomEvent")
 　　e.initCustomEvent("myEvent", true, false, "hello world!")
-　　div.dispatchEvent(e)
+    button.dispatchEvent(e) // 这样button就会在执行这段代码后执行myEvent事件处理函数
 }
 ```
