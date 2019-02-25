@@ -60,7 +60,7 @@ DOM2级事件有三个参数：
 - 第二个参数是事件处理函数
 - 第三个参数代表事件执行/移除的阶段，`true`表示在捕获阶段，`false`表示在冒泡阶段，`addEventListener`中该参数默认为`false`，值得注意的是：**如果你在冒泡阶段和捕获阶段同时绑定了事件，那么移除事件的时候需要选择阶段单独移除**
 
->此处要先介绍一下什么是事件流
+>**此处要先介绍一下什么是事件流**
 
 ### 事件流
 
@@ -84,7 +84,7 @@ DOM2级事件规定事件流包括三个阶段，事件捕获阶段、处于目�
 
 <div align=center><img src="/img/dom-event/event-stream.png" /></div>
 
-**我们一般注册事件监听都是在事件冒泡阶段，因为它可以帮我们实现事件委托。**
+>**我们一般注册事件监听都是在事件冒泡阶段，因为它可以帮我们实现事件委托。**
 
 ## DOM3
 
@@ -106,18 +106,18 @@ DOM3级还定义了自定义事件，自定义事件不是由DOM原生触发的�
 示例如下：
 
 ```javascript
-var div = document.getElementById("myDiv");
+const div = document.getElementById("myDiv");
 
-EventUtil.addEventHandler(div, "myEvent", function () {
+EventUtil.addEventHandler(div, "myEvent", () => {
 　　alert("div myEvent!")
 })
 
-EventUtil.addEventHandler(document, "myEvent", function(){
+EventUtil.addEventHandler(document, "myEvent", () => {
 　　alert("document myEvent!")
 })
 
 if (document.implementation.hasFeature("CustomEvents", "3.0")) {
-　　var e = document.createEvent("CustomEvent")
+　　const e = document.createEvent("CustomEvent")
 　　e.initCustomEvent("myEvent", true, false, "hello world!")
 　　div.dispatchEvent(e)
 }
