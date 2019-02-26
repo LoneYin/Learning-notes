@@ -38,4 +38,32 @@ MDN是这样介绍的：
 > - 使用指定的参数调用构造函数 `Foo` ，并将 `this` 绑定到新创建的对象。`new Foo` 等同于 `new Foo()`，也就是没有指定参数列表，`Foo` 不带任何参数调用的情况。
 > - 由构造函数返回的对象就是 `new` 表达式的结果。如果构造函数没有显式返回一个对象，则使用步骤1创建的对象。（一般情况下，构造函数不返回值，但是用户可以选择主动返回对象，来覆盖正常的对象创建步骤）
 
-我们可以这样来理解
+我们可以这样来理解：
+
+- 第一步：`var obj = Object.create(Foo.prototype)` // 创建一个继承自`Foo.prototype`的新对象
+- 第二步：`var result = Foo.call(obj)` // 绑定this与新建对象obj，执行构造函数Foo
+- 第三步：`var foo = typeof(result) === 'object' ? result : obj` // 如果构造函数返回了一个对象，那么这个对象将会取代第一步中创建的对象返回给 foo , 否则的话则返回第一步中创建的对象（返回字符串和数字也是如此）。
+
+所以我们可以自己实现一个`new`运算符，代码如下：
+
+```javascript
+
+function Person(name) {
+    this.name = name
+    this.getName = function () {
+        console.log(this.name)
+    }
+}
+
+function _new (Fn, arg) {
+    var obj = Object.create(Fn.prototype)
+    var result = Fn.call(obj, arg)
+    return typeof(result) === 'object' ? result : obj
+}
+
+// 验证的方法也很简单，我们使用上文定义的Person构造函数
+
+var tom = _new(Person, 'Tom')
+tom.__proto__.constructor === Person // true
+console.log(tom.name) // "Tom"
+```
