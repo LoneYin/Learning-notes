@@ -47,14 +47,6 @@ MDN是这样介绍的：
 所以我们可以自己实现一个`new`运算符，代码如下：
 
 ```javascript
-
-function Person(name) {
-    this.name = name
-    this.getName = function () {
-        console.log(this.name)
-    }
-}
-
 function _new (Fn, arg) {
     var obj = Object.create(Fn.prototype)
     var result = Fn.call(obj, arg)
@@ -62,6 +54,13 @@ function _new (Fn, arg) {
 }
 
 // 验证的方法也很简单，我们使用上文定义的Person构造函数
+
+function Person(name) {
+    this.name = name
+    this.getName = function () {
+        console.log(this.name)
+    }
+}
 
 var tom = _new(Person, 'Tom')
 tom.__proto__.constructor === Person // true
