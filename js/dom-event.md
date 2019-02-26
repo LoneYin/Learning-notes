@@ -2,7 +2,7 @@
 
 事件驱动是`JavaScript`作为一种脚本语言的特质之一，而事件则是`JavaScript`和`HTML`交互的基础。用户想要与任何的浏览器页面进行交互，都要通过绑定相应的事件。
 
-DOM事件分为`DOM0`、`DOM2`和`DOM3`三种（没错，没有DOM1）
+DOM事件分为`DOM0`、`DOM2`和`DOM3`三种（没错，没有`DOM1`）
 
 ## DOM0
 
@@ -31,9 +31,9 @@ button.onclick = null
 
 而且同一个HTML元素只能绑定一个同种事件类型的函数，否则后面的函数会覆盖之前的事件处理函数
 
-
 ## DOM2
-DOM2是通过`addEventListener`绑定的事件，因为浏览器的兼容性问题，在IE下DOM2事件通过`attchEvent`绑定
+
+DOM2是通过`addEventListener`绑定的事件，它增加了许多DOM1不支持的新模块。因为浏览器的兼容性问题，在IE下DOM2事件通过`attchEvent`绑定
 
 DOM2事件中同一个元素的同种事件可以绑定多个事件处理函数，按照绑定顺序依次执行，而清除DOM2事件则需要使用`removeEventListener/detachEvent`传入函数清除指定函数（所以要移除事件请确保注册事件监听时传入的函数为**外部函数**，而不是**匿名函数**）
 
@@ -96,6 +96,7 @@ DOM3进一步扩展了DOM，在DOM3中引入了以下模块：
 - **自定义事件**
 
 ### DOM中的自定义事件
+
 DOM3级还定义了自定义事件，自定义事件不是由DOM原生触发的，它的目的是让开发人员创建自己的事件。要创建的自定义事件可以由`createEvent("CustomEvent")`， 返回的对象有一个`initCustomEvent`方法接收如下四个参数：
 
 - type（字符串）：触发的事件类型，自定义。例如 `keyDown`，`selectedChange`
