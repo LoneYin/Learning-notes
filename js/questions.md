@@ -38,6 +38,21 @@ function flatten(arr) {
 function flatten(arr) {
     return [].concat(...arr.map(item => Array.isArray(item) ? flatten(item) : item))
 }
+// for
+function flatten(arr) {
+    const result = []
+    function func(list) {
+        for (let item of list) {
+            if (Array.isArray(item)) {
+                func(item)
+            } else {
+                result.push(item)
+            }
+        }
+    }
+    func(arr)
+    return result
+}
 // 转字符串法 不过只适用于纯数字数组
 function flatten(arr) {
     return arr.toString().split(',').map(item => Number(item))
