@@ -29,12 +29,14 @@ b.x // --> {n: 2}
 ```javascript
 // [1, [2, 3, [4, 5]]]  ------>    [1, 2, 3, 4, 5]
 
-// 递归法  可以使用reduce 循环 等多种方式
-// reduce 演示如下
+// 递归法  可使用reduce map for循环等实现
+// reduce
 function flatten(arr) {
-    return arr.reduce((total, item) => {
-        total.concat(Array.isArray(item) ? flatten(item) : item)
-    }, [])
+    return arr.reduce((total, item) => total.concat(Array.isArray(item) ? flatten(item) : [item]), [])
+}
+// map
+function flatten(arr) {
+    return [].concat(...arr.map(item => Array.isArray(item) ? flatten(item) : item))
 }
 // 转字符串法 不过只适用于纯数字数组
 function flatten(arr) {
