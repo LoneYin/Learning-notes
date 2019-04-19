@@ -79,7 +79,7 @@ function updateChildren (parentElm, oldCh, newCh, insertedVnodeQueue, removeOnly
 }
 ```
 
-## 设置key的可以在`diff`中更快速的找到对应节点，提高`diff`速度
+## 设置`key`的可以在`diff`中更快速的找到对应节点，提高`diff`速度
 
 在`updateChildren`方法的`while`循环中，如果**头尾交叉对比**没有结果，即`oldStartVnode`存在且`oldEndVnode`存在且新旧`children`首尾四个`vnode`互不相同的条件下，会根据`newStartVnode`的`key`去对比`oldCh`数组中的`key`，从而找到相应`oldVnode`
 
@@ -136,7 +136,7 @@ if (isUndef(idxInOld)) { // New element
 }
 ```
 
-## 那么设置`key`值就一定能提高diff效率吗？
+## 那么设置`key`值就一定能提高`diff`效率吗？
 
 答案是否定的
 
