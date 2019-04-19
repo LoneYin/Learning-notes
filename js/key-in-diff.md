@@ -116,7 +116,7 @@ function findIdxInOld (node, oldCh, start, end) {
 
 而如果`newStartVnode`并没有设置`key`，则通过`findIdxInOld`方法遍历`oldCh`来获取与`newStartVnode`互为`sameVnode`的`oldVnode`，返回这个`oldVnode`在`oldCh`数组的`index`。（前面介绍过，`Vue`在更新真实DOM时倾向于真实DOM节点的复用，所以在这里还是会选择去找对应的`oldVnode`，来更新已有的DOM节点）
 
-这时候设置`key`的好处就显而易见了，有`key`存在时我们可以通过map映射快速定位到对应的`oldVnode`然后进行`patch`，没有`key`值时我们需要遍历这个`oldCh`数组然后去一一进行比较，相比之下肯定是`key`存在时`diff`更高效。
+这时候设置`key`的好处就显而易见了，有`key`存在时我们可以通过`map`映射快速定位到对应的`oldVnode`然后进行`patch`，没有`key`值时我们需要遍历这个`oldCh`数组然后去一一进行比较，相比之下肯定是`key`存在时`diff`更高效。
 
 接下来就是更新DOM的过程，如果`oldCh[idxInOld]`存在且与`newStartVnode`互为`sameVnode`存在则先更新再移动，否则创建新的`element`
 
