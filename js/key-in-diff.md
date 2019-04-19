@@ -146,14 +146,17 @@ if (isUndef(idxInOld)) { // New element
 
 // 如果我们的数组是这样的
 [1, 2, 3, 4, 5]
+
 // 它的渲染结果是这样的
 `<div>1</div>`  // key: undefined
 `<div>2</div>`  // key: undefined
 `<div>3</div>`  // key: undefined
 `<div>4</div>`  // key: undefined
 `<div>5</div>`  // key: undefined
+
 // 将它打乱
 [4, 1, 3, 5, 2]
+
 // 渲染结果是这样的 期间只发生了DOM节点的文本内容的更新
 `<div>4</div>`  // key: undefined
 `<div>1</div>`  // key: undefined
@@ -164,14 +167,17 @@ if (isUndef(idxInOld)) { // New element
 
 // 如果我们给这个数组每一项都设置了唯一的key
 [{id: 'A', value: 1}, {id: 'B', value: 2}, {id: 'C', value: 3}, {id: 'D', value: 4}, {id: 'E', value: 5}]
+
 // 它的渲染结果应该是这样的
 `<div>1</div>`  // key: A
 `<div>2</div>`  // key: B
 `<div>3</div>`  // key: C
 `<div>4</div>`  // key: D
 `<div>5</div>`  // key: E
+
 // 将它打乱
 [{id: 'D', value: 4}, {id: 'A', value: 1}, {id: 'C', value: 3}, {id: 'E', value: 5}, {id: 'B', value: 2}]
+
 // 渲染结果是这样的  期间只发生了DOM节点的移动
 `<div>4</div>`  // key: D
 `<div>1</div>`  // key: A
