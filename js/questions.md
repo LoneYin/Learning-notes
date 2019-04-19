@@ -49,7 +49,7 @@ function flatten(arr) {
                 result.push(item)
             }
         }
-    }
+    }s
     func(arr)
     return result
 }
