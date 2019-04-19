@@ -39,7 +39,6 @@ function flatten(arr) {
     return [].concat(...arr.map(item => Array.isArray(item) ? flatten(item) : item))
 }
 // for
-var arr = [ [1, 2, 2], [3, 4, 5, 5], [6, 7, 8, 9, [11, 12, [12, 13, [14] ] ] ], 10];
 function flatten(arr) {
     const result = []
     const func = arrInside => {
@@ -51,10 +50,9 @@ function flatten(arr) {
             }
         }
     }
-    func()
+    func(arr)
     return result
 }
-flatten(arr)
 // 转字符串法 不过只适用于纯数字数组
 function flatten(arr) {
     return arr.toString().split(',').map(item => Number(item))
