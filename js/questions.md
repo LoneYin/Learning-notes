@@ -58,3 +58,49 @@ function flatten(arr) {
     return arr.toString().split(',').map(item => Number(item))
 }
 ```
+
+## Q3：['1', '2', '3'].map(parseInt) 返回结果
+
+### Arrray.map
+
+`Array.map`方法会遍历原数组中的每个元素并执行`callback`，返回一个新的数组
+
+- `callback`的第一个参数是`currentValue`，也就是原数组中正在处理的当前元素
+- `callback`的第二个参数是`index`，是原数组中正在处理的当前元素的索引
+
+
+### parseInt
+
+`parseInt`方法解析一个字符串参数，并返回一个指定基数（进制）的整数
+
+- `parseInt`的第一个参数是`string`，也就是要被解析的字符串的值
+- `parseInt`得第二个参数是`radix`，一个介于2和36之间的整数，默认为10，代表解析字符串的基数（进制数）
+
+```javascript
+['1', '2', '3'].map(parseInt)
+```
+
+等同于
+
+```javascript
+['1', '2', '3'].map((item, index) => {
+    return parseInt(item, index)
+})
+```
+
+即返回值分别为
+
+```javascript
+parseInt('1', 0) //radix为0时，且string参数不以“0x”和“0”开头时，按照10为基数处理。这个时候返回1
+parseInt('2', 1) //基数为1（1进制）表示的数中，最大值小于2，所以无法解析，返回NaN
+parseInt('3', 2) //基数为2（2进制）表示的数中，最大值小于3，所以无法解析，返回NaN
+```
+
+所以
+
+```javascript
+['1', '2', '3'].map(parseInt)
+// 1, NaN, NaN
+```
+
+## Q4：[] == ![]
