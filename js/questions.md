@@ -27,7 +27,7 @@ b.x // --> {n: 2}
 ## Q2：数组扁平化
 
 ```javascript
-// [1, [2, 3, [4, 5]]]  ------>    [1, 2, 3, 4, 5]
+// [[1,2,2],[3, 4, 5, 5],[6, 7, 8, 9,[11,12,[12,13,[14]]]],10]  ------>   [1,2,2,3,4,5,5,6,7,8,9,11,12,12,13,14,10]
 
 // 递归法  可使用reduce map for循环等实现
 // reduce
@@ -39,18 +39,14 @@ function flatten(arr) {
     return [].concat(...arr.map(item => Array.isArray(item) ? flatten(item) : item))
 }
 // for
-function flatten(arr) {
-    const result = []
-    const func = arrInside => {
-        for (let item of arrInside) {
-            if (Array.isArray(item)) {
-                func(item)
-            } else {
-                result.push(item)
-            }
+function flatten(arr, result = []) {
+    for (let item of arr) {
+        if (Array.isArray(item)) {
+            flatten(item, result)
+        } else {
+            result.push(item)
         }
-    }s
-    func(arr)
+    }
     return result
 }
 // 转字符串法 不过只适用于纯数字数组
@@ -67,7 +63,6 @@ function flatten(arr) {
 
 - `callback`的第一个参数是`currentValue`，也就是原数组中正在处理的当前元素
 - `callback`的第二个参数是`index`，是原数组中正在处理的当前元素的索引
-
 
 ### parseInt
 
@@ -104,3 +99,27 @@ parseInt('3', 2) //基数为2（2进制）表示的数中，最大值小于3，�
 ```
 
 ## Q4：[] == ![]
+
+```javascript
+[] == ![]  // true
+```
+
+### 解析：
+
+`==` 运算符，`javascript`语言灵活性的代表但也是最臭名昭著的黑魔法之一，比较运算之中发生的隐式类型转化不知坑了多少JSer。
+
+我们先来列举一下`==`（相等运算符）的运算规则
+
+- 如果两个值类型相同，进行 `====` （严格相等运算符） 比较
+- 如果两个值类型不同，它们可能是相等的，此时根据下列规则进行类型转换后比较:
+    1. 如果一个值为`null`，另一个是`undefined`，那么**相等**
+    2. 如果一个值是`String`，另一个是`Number`，在比较之前要先将`String`转换为`Number`，即调用Number()方法
+    3. 如果一个值是`Boolean`，则先将这个`Boolean`转换为数值后再进行比较，即调用`Number()`方法
+    4. 如果一个值是`Object`，另一个是`String`或`Number`，则先将对象转换为基本数据类型再比较，即调用`javascript`内置类的`toString`或`valueOf`方法，`valueOf`会先于`toString`，例外的是`Date`对象，会直接用`toString`转换
+
+接下来我们分析一下`[] == ![]`为什么返回`true`
+
+1. 首先运算符右边的`![]`会先进行运算，得到`false`，即`[] == false`
+2. 当等式两边有`Boolean`值得时候会先对其进行类型转换，即`Number(false) = 0`，等式两边变为`[] == 0`
+3. 当等式两边一个值为`Object`另一个为`Number`时，将`Object`进行类型转换，即`[].valueOf()`，发现返回的结果`'[]'`与`0`还是不相等，所以再调用`[].toString()`得到`''`，`Number('')`得到`0`
+4. `0 == 0` 成立， 返回`true`
