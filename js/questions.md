@@ -113,9 +113,9 @@ parseInt('3', 2) //基数为2（2进制）表示的数中，最大值小于3，�
 - 如果两个值类型相同，进行 `====` （严格相等运算符） 比较
 - 如果两个值类型不同，它们可能是相等的，此时根据下列规则进行类型转换后比较:
     1. 如果一个值为`null`，另一个是`undefined`，那么**相等**
-    2. 如果一个值是`String`，另一个是`Number`，在比较之前要先将`String`转换为`Number`，即调用Number()方法
+    2. 如果一个值是`String`，另一个是`Number`，在比较之前要先将`String`转换为`Number`，即调用`Number()`方法
     3. 如果一个值是`Boolean`，则先将这个`Boolean`转换为数值后再进行比较，即调用`Number()`方法
-    4. 如果一个值是`Object`，另一个是`String`或`Number`，则先将对象转换为基本数据类型再比较，即调用`javascript`内置类的`toString`或`valueOf`方法，`valueOf`会先于`toString`，例外的是`Date`对象，会直接用`toString`转换
+    4. 如果一个值是`Object`，另一个是`String`或`Number`，则先将对象转换为基本数据类型再比较，即调用`javascript`内置类的`valueOf`或`toString`方法，`valueOf`会先于`toString`，例外的是`Date`对象，会直接用`toString`转换
 
 接下来我们分析一下`[] == ![]`为什么返回`true`
 
