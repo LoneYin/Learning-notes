@@ -123,3 +123,24 @@ parseInt('3', 2) //基数为2（2进制）表示的数中，最大值小于3，�
 2. 当等式两边有`Boolean`值得时候会先对其进行类型转换，即`Number(false) = 0`，等式两边变为`[] == 0`
 3. 当等式两边一个值为`Object`另一个为`Number`时，将`Object`进行类型转换，即`[].valueOf()`，发现返回的结果`[]`仍是`Object`，所以再调用`[].toString()`得到`''`，`Number('')`得到`0`
 4. `0 == 0` 成立， 返回`true`
+
+## Q5: React中setState在什么情况下是同步的？
+
+在 React 中，如果是在 React 引发的事件处理方法（比如通过 onClick 引发的事件处理）或在生命周期中调用 setState 不会同步更新 this.state 。除此之外的 setState 调用会同步执行this.state。所谓**除此之外**，指的是绕过 React 通过 addEventListener 直接添加的事件处理函数，还有通过 setTimeout/setInterval 产生的异步调用。
+
+> 出于性能考虑，React 可能会把多个 setState() 调用合并成一个调用。  —— [官方文档](https://zh-hans.reactjs.org/docs/state-and-lifecycle.html)
+
+>setState 的**异步**并不是说内部由异步代码实现，其实本身执行的过程和代码都是同步的，只是合成事件和钩子函数的调用顺序在更新之前，导致在合成事件和钩子函数中没法立马拿到更新后的值，形式了所谓的“异步”，当然可以通过第二个参数 setState(partialState, callback) 中的callback拿到更新后的结果。
+
+> setState 的批量更新优化也是建立在**异步**（合成事件、钩子函数）之上的，在原生事件和setTimeout 中不会批量更新，在**异步**中如果对同一个值进行多次 setState ， setState 的批量更新策略会对其进行覆盖，取最后一次的执行，如果是同时 setState 多个不同的值，在更新时会对其进行合并批量更新。
+
+关于setState的具体内容详见大佬的文章[《你真的理解setState吗？》](https://juejin.im/post/5b45c57c51882519790c7441)
+
+## Q6: HTTP2.0了解吗？
+
+HTTP2.0新特性如下：
+
+1. **新的二进制格式**： HTTP1.x的解析是基于文本。基于文本协议的格式解析存在天然缺陷，文本的表现形式有多样性，要做到健壮性考虑的场景必然很多，二进制则不同，只认0和1的组合。基于这种考虑HTTP2.0的协议解析决定采用二进制格式，实现方便且健壮。
+2. **多路复用**：即连接共享，HTTP2.0多个请求可同时在一个连接上并行执行。某个请求任务耗时严重，不会影响到其它连接的正常执行，HTTP1.x则可能会因为一个请求超时而发生线头阻塞。
+3. **header压缩**：HTTP1.x的header带有大量信息，而且每次都要重复发送，HTTP2.0使用encoder来减少需要传输的header大小，通讯双方各自cache一份header fields表，既避免了重复header的传输，又减小了需要传输的大小。
+4. **服务端推送**：服务端推送能把客户端所需要许多资源随着单次请求一起发送到客户端，省去了客户端重复请求的步骤
