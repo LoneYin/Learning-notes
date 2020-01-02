@@ -45,9 +45,9 @@ function debounce(fn, delay) {
 function throttle(fn, delay) {
     let timer = null,
         remaining = 0,
-        previous = new Date();
+        previous = Date.now();
     return function() {
-        let now = new Date();
+        let now = Date.now();
         remaining = now - previous;
         if (remaining >= delay) {
             timer && clearTimeout(timer);
@@ -58,7 +58,7 @@ function throttle(fn, delay) {
             if (!timer) {
                 timer = setTimeout(() => {
                     fn.apply(this, arguments);
-                    previous = new Date();
+                    previous = Date.now();
                 }, delay - remaining);
             }
         }
