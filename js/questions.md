@@ -202,3 +202,8 @@ HTTP2.0新特性如下：
 4. web服务器使用自己的私钥，获取浏览器发来的随机数（即Premaster secret）。
 
 5. 浏览器和web服务器根据约定的加密方法，使用前面的三个随机数，生成"对话密钥"（session key），用来加密接下来的整个对话过程。
+
+## Q9: Function.__proto__ === Function.prototype?
+是对的  因为 Function 也是一个函数，它的__proto__指向 Function 构造函数的原型，很扯
+
+应该是现有 Function.prototype 然后有的 function Function()
