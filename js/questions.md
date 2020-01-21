@@ -207,3 +207,39 @@ HTTP2.0新特性如下：
 是对的  因为 Function 也是一个函数，它的__proto__指向 Function 构造函数的原型，很扯
 
 应该是现有 Function.prototype 然后有的 function Function()
+
+## Q10: 为什么React的事件handler需要手动绑定this?
+相对于其他框架来说，react使用了合成事件（SyntheticEvent）来标准化浏览器的事件。
+
+合成事件是一种顶层代理机制，这种代理机制作用的结果是：
+
+> 事件依然在真实的dom节点上触发，之后会冒泡一路到document的节点，然后开始分发document节点收集到的事件，这个时候react从事件触发的组件实例开始， 遍历虚拟dom树，从树上取下我们绑定的事件，收集起来，然后执行。
+
+举个例子：
+```js
+class Test extends React.Component {
+   fatherHandler =  function father() { /*...*/}
+   childHander = function child() {/*...*/}
+
+   render(){
+     return (
+       <div onClick={this.fatherHandler}>
+         <span onClick={this.childHander}>
+         </span>
+       </div>
+     );
+   }
+}
+```
+
+当事件触发以后react会把上面的事件处理函数放到一个数组里是这样的
+
+```js
+[father, child]
+```
+
+最后，react只要遍历执行这个数组，就能执行所有需要执行的事件处理函数。哈哈，想必眼尖的同学已经看出问题了，之前我们对函数进行了临时保存(简单粗暴的把事件处理函数赋值给了onClick属性)，这个时候执行的话，this自然就丢失了。有的同学也说了这其实不是react的锅，是js本身的问题。但是如果react保存顺便保存一下实例，还是可以做到，不需要你绑定this的，但是这样对于react来说代价太大了。
+
+```js
+[{instance, father}, {instance，child}]
+```
