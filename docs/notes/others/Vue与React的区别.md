@@ -1,0 +1,48 @@
+# Vue与React的区别
+
+## 核心区别
+
+### 1. 数据驱动的模式不一样
+
+>Vue: Reactive
+
+Vue视图的更新是通过依赖收集和数据监听自动触发的，开发者只需要变动数据即可触发视图的更新。
+
+>React: Immutable
+
+React则是让开发者通过setState手动更新视图，React本身并不知道何时该去更新，也不会在开发者手动更新之外进行视图更新。
+
+### 2. API 的设计哲学不一样
+
+>Vue：易用性
+
+Vue提供的API比较多，这些API(语法糖)覆盖了很多场景，再加上自动化的响应式模型，使用Vue可以大大简化开发者的代码，提升开发体验。作为一个开发者你不需要知道这些API的原理，只要会用就足够了。
+
+>Recat：简约性
+
+React提供的API很少，整体设计透露着一种简约的美。React只是给开发者框定了一个编写React应用的大体范围，开发者需要考虑如何具体的实现功能，这对开发者的js能力有更高的要求，但同时也给了开发者更高的自由度。
+
+## 主要区别
+
+### 1. 编写UI的方式不同 jsx vs template
+
+### 2. 组件声明的方式不同 class API vs options object
+
+### 3. 复用逻辑的方式不同（这是由于上面种种原因造成的）
+
+React: 
+- Mixins(已废弃)
+- HOC
+- RenderProps
+
+Vue:
+- Mixins
+- Slots
+- HOC(谁用谁知道)
+- RenderProps(理论上可以实现，因为Vue支持手写render)
+
+### 4. React的性能优化与Fiber架构
+
+### 5. React Hooks 与 Vue3
+
+### 6. React + Prepack 与 Vue3的预编译优化
