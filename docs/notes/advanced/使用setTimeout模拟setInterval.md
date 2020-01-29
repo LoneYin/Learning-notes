@@ -1,4 +1,4 @@
-# 封装一个 Timer 类，用 setTimeout 实现 setInterval
+# 用 setTimeout 实现 setInterval
 
 ## 代码如下
 
@@ -12,22 +12,19 @@ class Timer {
 
   isTimeout = false;
   identifier = undefined;
-  set(fn, duraing = 1000) {
-    if (fn && typeof fn === "function") {
+  set(cb, duraing = 1000) {
+    if (cb && typeof cb === "function") {
       this.identifier = setTimeout(() => {
-        fn();
-        if (this.isTimeout) {
-          this.clear();
-        } else {
-          this.set(fn, duraing);
-        }
+        cb();
+        this.isTimeout ? this.clear() : this.set(cb, duraing);
       }, duraing);
     } else {
-      throw new Error("fn must be a function");
+      throw new Error("cb must be a function");
     }
   }
   clear() {
     clearTimeout(this.identifier);
+    this.identifier = undefined;
   }
 }
 ```

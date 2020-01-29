@@ -21,7 +21,9 @@ module.exports = {
           title: "网络知识",
           collapsable: false,
           children: [
-            "network/网络知识",
+            "network/TCP与DNS",
+            "network/HTTP协议",
+            "network/GET和POST请求的区别",
             "network/Web安全"
           ]
         },
@@ -31,7 +33,7 @@ module.exports = {
           children: [
             "advanced/JS执行上下文栈",
             "advanced/原型链与继承",
-            "advanced/Generator",
+            "advanced/Iterator和Generator",
             "advanced/Promise",
             "advanced/Proxy",
             "advanced/节流和防抖",

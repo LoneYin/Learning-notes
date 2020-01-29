@@ -1,4 +1,4 @@
-# JavaScript中的new运算符到底做了什么
+# new运算符到底做了什么
 
 > 阅读下面内容需要先了解JavaScript中的原型链以及构造函数
 
