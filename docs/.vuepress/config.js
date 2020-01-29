@@ -39,6 +39,8 @@ module.exports = {
             "advanced/节流和防抖",
             "advanced/函数柯里化",
             "advanced/bind和call和apply",
+            "advanced/另一个角度理解this",
+            "advanced/闭包",
             "advanced/常见算法",
             "advanced/单例模式",
             "advanced/观察者模式",
