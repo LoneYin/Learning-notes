@@ -48,7 +48,7 @@ Function.prototype.myBind = function(context) {
 如果绑定后的函数被当做构造函数被 new 调用，则此时的 this 指向构造函数的实例对象，我们可以加一个空构造函数（fNOP）进行中转，通过判断 this instanceof fNOP 来判断这个绑定函数是否被 new 调用了，如果是的话就不改变 this （实例对象），不是的话就继续绑定最初传入的 context
 
 ```js
-Function.prototype.bind2 = function(context) {
+Function.prototype.myBind = function(context) {
   context = context || window;
   const self = this;
   const _args = [...arguments].splice(1);

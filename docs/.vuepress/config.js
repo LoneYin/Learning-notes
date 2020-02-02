@@ -42,6 +42,7 @@ module.exports = {
             "advanced/另一个角度理解this",
             "advanced/闭包",
             "advanced/常见算法",
+            "advanced/深拷贝",
             "advanced/单例模式",
             "advanced/观察者模式",
             "advanced/使用setTimeout模拟setInterval",
@@ -54,7 +55,6 @@ module.exports = {
           children: [
             "others/模块加载机制",
             "others/前端性能优化",
-            "others/移动端适配方案",
             "others/Vue与React的区别",
             "others/面试题整理"
           ]
