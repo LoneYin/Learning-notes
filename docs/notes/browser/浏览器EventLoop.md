@@ -13,6 +13,8 @@
 - task(宏任务)主要包含：script 代码、setTimeout、setInterval、postMessage、MessageChannel、setImmediate(Nodejs/IE10)、I/O(Nodejs)、UI 交互事件
 - microtask(微任务)主要包含：Promise.then、process.nextTick(Nodejs)、MutaionObserver、V8垃圾回收机制
 
+还有一种特殊的异步任务 requestAnimationFrame，它的回调不在（micro）task queue 之中
+
 ## EventLoop 流程
 
 整个最基本的 Event Loop 如图所示：

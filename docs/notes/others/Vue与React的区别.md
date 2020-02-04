@@ -10,7 +10,7 @@ Vue视图的更新是通过依赖收集和数据监听自动触发的，开发�
 
 >React: Immutable
 
-React则是让开发者通过setState手动更新视图，React本身并不知道何时该去更新，也不会在开发者手动更新之外进行视图更新。
+React则是让开发者通过setState手动更新视图，React本身并不知道何时该去更新。
 
 ### 2. API 的设计哲学不一样
 
@@ -26,23 +26,45 @@ React提供的API很少，整体设计透露着一种简约的美。React只是�
 
 ### 1. 编写UI的方式不同 jsx vs template
 
+jsx 就是 javascript 语法的延伸，他具有 js 的逻辑表达能力和动态性，这使得 jsx 的编写十分灵活自由，但是过高的灵活性会使得运行时可用于优化的信息不足，而且 jsx 可以作为简洁的 Render Function 在组件中传递。
+
+(React 团队也在尝试使用 React + Prepack 的组合进行预编译优化）
+
+template 更符合一般模板的规范，易于上手，而且 vue 的在模板编译过程做了更多的工作以支持 指令/过滤器 等特性，使得模板在大部分情况下都有着更高的开发效率，而且模板的相对静态性有利于它在编译过程中的优化，比如 optimize 中的静态节点标记，以及 Vue3 中的 block tree。
+
+(这里谈一下 Vue3 的优化思路。Vue2 compile 过程中的 optimize 是把整棵DOM树当做动态的然后去标记静态节点进行优化，这样做的目的是为了兼容，Vue3 的优化思路反了过来，是先将整棵DOM树看做静态的，然后找到其中动态的节点，而事实上在实际项目中静态节点的数量是要比动态节点更多的)
+
 ### 2. 组件声明的方式不同 class API vs options object
+
+React16之前: class API
+优点：1. 方便类型推导 2.实现高阶组件 3.可以使用一些新特性如decorator
+
+Vue2: options object
+优点：1. 易于拓展
 
 ### 3. 复用逻辑的方式不同（这是由于上面种种原因造成的）
 
 React: 
-- Mixins(已废弃)
-- HOC
+- Mixins(随着 createClass 一起废弃)
+- HOC 缺点：来源不清晰，嵌套地狱
 - RenderProps
 
 Vue:
-- Mixins
+- Mixins 缺点：来源不清晰，命名冲突
 - Slots
-- HOC(谁用谁知道)
-- RenderProps(理论上可以实现，因为Vue支持手写render)
+- HOC(Vue 的 HOC 谁用谁知道)
+- RenderProps(理论上可以实现，因为Vue支持手写render，但有 scope-slots 方案)
 
-### 4. React的性能优化与Fiber架构
+### 4. React的性能优化与 Fiber 架构 与 Concurrent 模式
+
+Vue：基于组件的 diff，更新粒度较细，更新方式是一边 diff 一边 patch
+React：局部（或全部）暴力递归更新策略，更新分两个阶段：一个阶段是 vodm tree 的 diff，然后是集中的 patch。当应用过于庞大的时候，会有性能问题（未经优化的子组件全部会重新渲染）。
+
+所以关于 React 的性能优化一直是开发者要解决的难题，React 先后提供了 shouldComponentUpdate PureComponent React.memo useCallback useMemo 等 API，让开发者对应用进行优化。
+
+React 引入了时间分片的理念，采用 Fiber 架构来解决更新卡顿的问题。
+React 将 react element 转换成了 由 Fiber 构成的链表结构，现在的 diff 过程变成了遍历而不是之前的递归，从同步的阻塞式的变成了可中断的。
 
 ### 5. React Hooks 与 Vue3
 
-### 6. React + Prepack 与 Vue3的预编译优化
+用组件作为承载逻辑的单元会带来更多的**组件嵌套问题**和**性能消耗**，所以我们应该把可复用的逻辑从组件内部抽离出来，同样是给组件注入逻辑，Hooks 或者 Vue3 的 Function API 对组件的侵入性更低、更可控，可以把他们理解为一种有迹可循的 Mixin，更细粒度的 Mixin
