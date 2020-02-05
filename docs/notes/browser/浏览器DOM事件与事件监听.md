@@ -80,19 +80,19 @@ DOM2 级事件有三个参数：
 
 IE 的事件流叫做事件冒泡。即事件开始时由最具体的元素（文档中嵌套层次最深的那个节点）接收，然后逐级向上传播到较为不具体的节点（文档）。所有现代浏览器都支持事件冒泡，并且会将事件一直冒泡到`window`对象。
 
-<div align=center><img src="/img/dom-event/bubbling.png" /></div>
+<div align=center><img src="/Learning-notes/img/dom-event/bubbling.png" /></div>
 
 ### 事件捕获
 
 事件捕获的思想是不太具体的节点应该更早的接收到事件，而在最具体的节点应该最后接收到事件。事件捕获的用以在于事件到达预定目标之前捕获它。IE9+、Safari、Chrome、Opera 和 Firefox 支持，且从`window`开始捕获（尽管 DOM2 级事件规范要求从`document`）。由于老版本浏览器不支持，所以很少有人使用事件捕获。
 
-<div align=center><img src="/img/dom-event/capturing.png" /></div>
+<div align=center><img src="/Learning-notes/img/dom-event/capturing.png" /></div>
 
 ### DOM2 事件流
 
 DOM2 级事件规定事件流包括三个阶段，事件捕获阶段、处于目标阶段和事件冒泡阶段。首先发生的事件捕获，为截获事件提供了机会；然后是实际的目标接收了事件；最后一个阶段是冒泡阶段，可以在这个阶段对事件做出响应。我们可以通过设置`addEventListener`的第三个参数来决定是在捕获阶段还是冒泡阶段执行事件。
 
-<div align=center><img src="/img/dom-event/event-stream.png" /></div>
+<div align=center><img src="/Learning-notes/img/dom-event/event-stream.png" /></div>
 
 > **我们一般注册事件监听都是在事件冒泡阶段，因为它可以帮我们实现事件委托。**
 

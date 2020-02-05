@@ -25,7 +25,7 @@
 - Event Loop 执行一次，从 task 队列中拉出一个 task 执行
 - Event Loop 继续检查 microtask 队列是否为空，依次执行直至清空队列
 
-<img src="/img/eventloop.png">
+<img src="/Learning-notes/img/eventloop.png">
 
 举个例子：
 

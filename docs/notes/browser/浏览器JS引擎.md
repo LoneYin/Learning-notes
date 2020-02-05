@@ -2,7 +2,7 @@
 
 ## V8的JavaScript执行管道
 
-<img src="/img/v8.png">
+<img src="/Learning-notes/img/v8.png">
 
 V8 目前形成了由解析器、基线编译器 Ignition 和优化编译器 TurboFan 组成的 JavaScript 执行管道。
 

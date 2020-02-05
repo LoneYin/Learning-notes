@@ -1,4 +1,5 @@
 module.exports = {
+  base: '/Learning-notes/',
   title: "学习笔记",
   description: "构建自己的前端知识体系",
   themeConfig: {

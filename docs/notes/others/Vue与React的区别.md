@@ -37,10 +37,12 @@ template 更符合一般模板的规范，易于上手，而且 vue 的在模板
 ### 2. 组件声明的方式不同 class API vs options object
 
 React16之前: class API
-优点：1. 方便类型推导 2.实现高阶组件 3.可以使用一些新特性如decorator
+优点：1. 方便类型推导 2. 便于实现高阶组件 3.可以使用一些新特性如decorator
+缺点：1. 拓展性差 2. decorator 等提案并不稳定 
 
 Vue2: options object
-优点：1. 易于拓展
+优点：1. 易于理解和上手 2. 对用户的代码进行了规范，看起来更条理
+缺点：1. 拓展性差
 
 ### 3. 复用逻辑的方式不同（这是由于上面种种原因造成的）
 
@@ -58,6 +60,7 @@ Vue:
 ### 4. React的性能优化与 Fiber 架构 与 Concurrent 模式
 
 Vue：基于组件的 diff，更新粒度较细，更新方式是一边 diff 一边 patch
+
 React：局部（或全部）暴力递归更新策略，更新分两个阶段：一个阶段是 vodm tree 的 diff，然后是集中的 patch。当应用过于庞大的时候，会有性能问题（未经优化的子组件全部会重新渲染）。
 
 所以关于 React 的性能优化一直是开发者要解决的难题，React 先后提供了 shouldComponentUpdate PureComponent React.memo useCallback useMemo 等 API，让开发者对应用进行优化。
