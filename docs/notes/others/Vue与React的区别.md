@@ -61,26 +61,34 @@ Vue2: options object
 React: 
 - Mixins(随着 createClass 一起废弃)
 - HOC 缺点：来源不清晰，嵌套地狱
-- RenderProps
+- RenderProps 缺点：嵌套地狱
 
 Vue:
 - Mixins 缺点：来源不清晰，命名冲突
-- Slots
+- Slots 缺点：嵌套地狱
 - HOC(Vue 的 HOC 谁用谁知道)
 - RenderProps(理论上可以实现，因为Vue支持手写render，但有 scope-slots 方案)
 
-### 4. React的性能优化与 Fiber 架构 与 Concurrent 模式
+其中 RenderProps 和 Slots 在形式和其作用上都是十分相近的
 
-Vue：基于组件的 diff，更新粒度较细，更新方式是一边 diff 一边 patch
+### 4. React 的性能优化与 Fiber 架构 与 Concurrent 模式
 
-React：局部（或全部）暴力递归更新策略，更新分两个阶段：一个阶段是 vodm tree 的 diff，然后是集中的 patch。当应用过于庞大的时候，会有性能问题（未经优化的子组件全部会重新渲染）。
+Vue：基于组件的 diff，更新粒度较细，更新方式是一边 diff 一边 patch，由于可以精确以到某个组件为单位，所以性能较好。
+
+React：局部（或全部）暴力递归更新策略，更新分两个阶段：一个阶段是 vodm tree 的 diff (Reconciliation)，然后是集中的 patch。当应用过于庞大的时候，会有性能问题（未经优化的子组件全部会重新渲染）。
 
 所以关于 React 的性能优化一直是开发者要解决的难题，React 先后提供了 shouldComponentUpdate PureComponent React.memo useCallback useMemo 等 API，让开发者对应用进行优化。
 
-React 引入了时间分片的理念，采用 Fiber 架构来解决更新卡顿的问题。
+React 引入了在框架内部 时间分片 和 任务调度 的理念，采用 Fiber 架构来解决更新卡顿的问题。
 
-React 将树状的 react element 转变成了 由 Fiber 构成的链表结构，现在的 diff 过程变成了遍历而不是之前的递归，在开启 concurrent 模式后，借助自己 polyfill 的 requesetIdleCallback API 使得 diff 过程从同步的阻塞式的变成了可中断和恢复的。
+React 将树状的 react element 转变成了由 Fiber 构成的链表结构，现在的 diff 过程变成了遍历而不是之前的递归，在开启 concurrent 模式后，借助自己 polyfill 的 requesetIdleCallback API 使得 diff 过程从同步的阻塞式的变成了可中断和恢复的。
+
+简单理解 Fiber 架构：React 采用了双重缓冲的技术，在原始 Fiber tree（旧的树）之外维护了一颗 WIP(workInProces，Fiber 在 reconciliation 过程中复制生成的镜像) tree，这棵树记录了当前 reconciler 更新的 Fiber，然后通过类似 requesetIdleCallback 的机制开启 WorkLoop，通过 reconciliation 过程的**中断-恢复**这种循环分次执行 WIP tree 的构建，在此期间完全不会阻塞 UI 的渲染，然后在 WIP tree 全部更新完毕后一次性 commit 给真实DOM节点。
 
 ### 5. React Hooks 与 Vue3
 
 用组件作为承载逻辑的单元会带来更多的**组件嵌套问题**和**性能消耗**，所以我们应该把可复用的逻辑从组件内部抽离出来，同样是给组件注入逻辑，Hooks 或者 Vue3 的 Function API 对组件的侵入性更低、更可控，可以把他们理解为一种有迹可循的 Mixin，更细粒度的 Mixin
+
+React 抛弃了一直以来组件为核心的设计理念，Hooks 是跟 Fiber 紧密结合的。但是由于每次组件更新都要重新执行所有的 Hooks，对性能也是一种消耗，而 React 团队的设计理念好像并不在乎这点性能。
+
+Vue3 的 Composition API 不同，它保留了 Options API，保留了组件的逻辑和生命周期，同时也将 Vue3 中的 Composition API 限定在了 setup 方法中，而 setup 只会在组件创建的时候执行。

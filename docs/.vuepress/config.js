@@ -1,5 +1,5 @@
 module.exports = {
-  base: '/Learning-notes/',
+  base: "/Learning-notes/",
   title: "学习笔记",
   description: "构建自己的前端知识体系",
   themeConfig: {
@@ -47,7 +47,7 @@ module.exports = {
             "advanced/单例模式",
             "advanced/观察者模式",
             "advanced/使用setTimeout模拟setInterval",
-            "advanced/new运算符",
+            "advanced/new运算符"
           ]
         },
         {
@@ -59,9 +59,11 @@ module.exports = {
             "others/Vue与React的区别",
             "others/面试题整理"
           ]
-        },
+        }
+      ],
+      "/essays/": [
         {
-          title: '个人随笔',
+          title: "个人随笔",
           collapsable: false,
           children: [
             "essay/给ReactRouter添加转场动画",
@@ -75,6 +77,10 @@ module.exports = {
       {
         text: "前端笔记",
         link: "/notes/"
+      },
+      {
+        text: "个人随笔",
+        link: "/essays/"
       }
     ]
   }
