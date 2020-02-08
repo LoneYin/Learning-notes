@@ -6,7 +6,7 @@
 
 >Vue: Reactive
 
-Vue视图的更新是通过依赖收集和数据监听自动触发的，开发者只需要变动数据即可触发视图的更新。
+Vue视图的更新是通过依赖收集和数据监听自动触发的，开发者只需要对响应对象进行赋值操作即可触发视图的更新。
 
 >React: Immutable
 
@@ -32,14 +32,14 @@ jsx 就是 javascript 语法的延伸，他具有 js 的逻辑表达能力和动
 
 template 更符合一般模板的规范，易于上手，而且 vue 的在模板编译过程做了更多的工作以支持 指令/过滤器 等特性，使得模板在大部分情况下都有着更高的开发效率，而且模板的相对静态性有利于它在编译过程中的优化，比如 optimize 中的静态节点标记，以及 Vue3 中的 block tree。
 
-(这里谈一下 Vue3 的优化思路。Vue2 compile 过程中的 optimize 是把整棵DOM树当做动态的然后去标记静态节点进行优化，这样做的目的是为了兼容，Vue3 的优化思路反了过来，是先将整棵DOM树看做静态的，然后找到其中动态的节点，而事实上在实际项目中静态节点的数量是要比动态节点更多的)
+(这里谈一下 Vue3 的优化思路。Vue2 compile 过程中的 optimize 是把整棵 AST 树当做动态的然后去标记静态节点进行优化，这样做的目的是为了兼容，Vue3 的优化思路反了过来，是先将整棵DOM树看做静态的，然后找到其中动态的节点，而事实上在实际项目中静态节点的数量是要比动态节点更多的)
 
 ### 2. 组件声明的方式不同 class API vs options object
 
 React: class API
 
 优点：
-1. 方便类型推导 
+1. 方便 Typescript 类型推导 
 2. 便于实现高阶组件 
 3. 可以使用一些原生 ES 新特性如 decorator
 
@@ -63,11 +63,15 @@ React:
 - HOC 缺点：来源不清晰，嵌套地狱
 - RenderProps 缺点：嵌套地狱
 
+- React Hooks
+
 Vue:
 - Mixins 缺点：来源不清晰，命名冲突
 - Slots 缺点：嵌套地狱
 - HOC(Vue 的 HOC 谁用谁知道)
 - RenderProps(理论上可以实现，因为Vue支持手写render，但有 scope-slots 方案)
+
+- Compositiona API
 
 其中 RenderProps 和 Slots 在形式和其作用上都是十分相近的
 

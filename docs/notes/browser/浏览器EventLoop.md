@@ -10,10 +10,11 @@
 
 异步任务分为两种：
 
-- task(宏任务)主要包含：script 代码、setTimeout、setInterval、postMessage、MessageChannel、setImmediate(Nodejs/IE10)、I/O(Nodejs)、UI 交互事件
-- microtask(微任务)主要包含：Promise.then、process.nextTick(Nodejs)、MutaionObserver、V8垃圾回收机制
+- task(宏任务)主要包含：callbacks、setTimeout、setInterval、postMessage、MessageChannel、setImmediate(Nodejs/IE10)、I/O、UI 交互事件（宏任务通过各类触发线程加入到 task queue 中）
+  
+- microtask(微任务)主要包含：Promise.then、process.nextTick(Nodejs)、MutaionObserver、V8垃圾回收机制（ microtask queue 应该是JS线程内部维护的）
 
-还有一种特殊的异步任务 requestAnimationFrame，它的回调不在（micro）task queue 之中
+还有一种特殊的异步任务 requestAnimationFrame，它的回调  不在 microtask/task queue 之中
 
 ## EventLoop 流程
 
@@ -22,7 +23,7 @@
 - queue 可以看做一种数据结构，用以存储需要执行的函数
 - timer 类型的 API（setTimeout/setInterval）注册的函数，等到期后进入 task 队列（这里不详细展开 timer 的运行机制）
 - 其余 API 注册函数直接进入自身对应的 task/microtask 队列
-- Event Loop 执行一次，从 task 队列中拉出一个 task 执行
+- Event Loop 执行一次，从 task 队列中拉出一个 task 压入执行栈执行
 - Event Loop 继续检查 microtask 队列是否为空，依次执行直至清空队列
 
 <img src="/Learning-notes/img/eventloop.png">

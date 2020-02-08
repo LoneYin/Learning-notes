@@ -1,4 +1,4 @@
-# 给React-Router添加路由页面切换时的过渡动画
+# 给React-Router添加转场动画
 
 >PS: 本篇文章使用的`React-Router`版本为`react-router-dom: ^5.0.0` (兼容4.x)
 

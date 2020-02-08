@@ -36,7 +36,6 @@ module.exports = {
             "advanced/原型链与继承",
             "advanced/Iterator和Generator",
             "advanced/Promise",
-            "advanced/Proxy",
             "advanced/节流和防抖",
             "advanced/函数柯里化",
             "advanced/bind和call和apply",
@@ -56,7 +55,6 @@ module.exports = {
           children: [
             "others/模块加载机制",
             "others/前端性能优化",
-            "others/Vue与React的区别",
             "others/面试题整理"
           ]
         }
@@ -68,7 +66,9 @@ module.exports = {
           children: [
             "essay/给ReactRouter添加转场动画",
             "essay/Vue列表渲染中的key的作用",
-            "essay/vue源码阅读知识点整理"
+            "essay/vue源码阅读知识点整理",
+            "essay/Webpack知识点整理",
+            "essay/Vue与React的区别",
           ]
         }
       ]
