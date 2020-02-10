@@ -50,7 +50,7 @@ const opts = (vm.$options = Object.create(vm.constructor.options));
 
 3. initState 之后挂载的时候调用 mountComponent 方法
 
-4. mountComponent 会新建一个渲染 watcher new Watcher 的过程中调用构造函数，构造函数最后执行 get 方法 然后 pushTarget 然后 Dep.target 就变成当前渲染 watcher 然后执行\_update(之前当做 getter 传入了 watcher 的构造函数)
+4. mountComponent 会新建一个渲染 watcher，new Watcher 的过程中调用构造函数，构造函数最后执行 get 方法 然后 pushTarget 然后 Dep.target 就变成当前渲染 watcher 然后执行\_update(之前当做 getter 传入了 watcher 的构造函数)
 
 5. 执行\_update 首先要执行\_render 这个过程中就访问了响应对象，调用了他们的 get 方法
 

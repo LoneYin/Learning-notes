@@ -18,7 +18,7 @@ Function.prototype.myCall = function(context) {
 ## apply 的实现
 
 ```js
-Function.prototype.myCall = function(context) {
+Function.prototype.myApply = function(context) {
   context = context || window;
   context.fn = this;
 

@@ -166,9 +166,13 @@ if (document.implementation.hasFeature("CustomEvents", "3.0")) {
 - **Event.eventPhase**  指示事件流正在处理哪个阶段。
 
   - 0
+  
     这个时间，没有事件正在被处理
+
   - 1
+  
     事件正在被目标元素的祖先对象处理. 这个处理过程从 Window 开始，然后 Document, 然后是 HTMLHtmlElement, 一直这样，直到目标元素的父元素。 通过 EventTarget.addEventListener() 注册为捕获模式的 Event listeners 被调用。
+    
   - 2
 
     事件对象已经抵达 the event's target. 为这个阶段注册的事件监听被调用。 如果 Event.bubbles 的值为 false, 对事件对象的处理在这个阶段后就会结束.

@@ -180,11 +180,11 @@ promise1 决议后才会决议 promise2 ，因为 promise2 的决议方法要在
 
 ## 思考
 
-如果 promise2.then 的 onFulfilled 反回了一个新的 PromiseA，那么 promise2 将直接取这个 PromiseA 的状态和值为己用，这发生在 resolvePromise 中；
+如果 promise2.then 的 onFulfilled/onRejected 反回了一个新的 PromiseA，那么 promise2 将直接取这个 PromiseA 的状态和值为己用，这发生在 resolvePromise 中；
 
 如果 PromiseA 的 resolve 时传入的 value 是一个新的 PromiseB，那么 PromiseA 也会直接取这个 PromiseB 的状态和值为己用，这发生在 resolve 中；
 
-也就是说，我们可以通过在 onFulfilled 时返回一个 newPromise，或者 resolve 时传入一个 newPromise，再执行 `newPromise.then(resolve, reject)` 来实现一个 Promise 决议的挂起（后置），直至 newPromise 决议。
+也就是说，我们可以通过在 onFulfilled/onRejected 时返回一个 newPromise，或者 resolve 时传入一个 newPromise，再执行 `newPromise.then(resolve, reject)` 来实现一个 Promise 决议的挂起（后置），直至 newPromise 决议。
 
 ## Promise/A+ 规范实现
 
