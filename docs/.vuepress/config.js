@@ -56,7 +56,7 @@ module.exports = {
             "others/模块加载机制",
             "others/前端性能优化",
             "others/面试题整理",
-            "others/最后梳理一遍从输入URL到页面渲染的流程"
+            "others/最后梳理一遍输入URL到页面渲染的流程"
           ]
         }
       ],

@@ -63,8 +63,29 @@ Function.prototype.myBind = function(context) {
     ]);
   };
 
-  fNOP.prototype = this.prototype;
+  fNOP.prototype = self.prototype;
   fBound.prototype = new fNOP();
   return fBound;
+};
+```
+
+或者直接用 Object.create 将原函数的原型添加到返回函数的原型链上
+
+```js
+Function.prototype.myBind = function(context) {
+  context = context || window;
+  const self = this;
+  const _args = [...arguments].splice(1);
+
+  function fnBound() {
+    const args = arguments;
+    return self.apply(this instanceof self ? this : context, [
+      ..._args,
+      ...args
+    ]);
+  };
+
+  fnBound.prototype = Object.create(self.prototype)
+  return fnBound;
 };
 ```
