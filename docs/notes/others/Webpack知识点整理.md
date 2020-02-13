@@ -126,19 +126,21 @@ function __webpack_require__(moduleId) {
    - 第三个阶段是将新的模块添加到 modules 中，当下次调用 **webpack_require** 方法的时候，就是获取到了新的模块代码了
 
 
-### Webpack 优化
+## Webpack 优化
 
-1. 使用 HappyPack 进行多进程 Loader 转换，它把任务分解给多个子进程去并发的执行，子进程处理完后再把结果发送给主进程。
+1. 使用 HappyPack 
+
+   进行多进程 Loader 转换，它把任务分解给多个子进程去并发的执行，子进程处理完后再把结果发送给主进程。
   
-2. 使用 ParallelUglifyPlugin 并行压缩，它会开启多个子进程，把对多个文件的压缩工作分配给多个子进程去完成，每个子进程其实还是通过 UglifyJS 去压缩代码，但是变成了并行执行。 所以 ParallelUglifyPlugin 能更快的完成对多个文件的压缩工作。
+2. 使用 ParallelUglifyPlugin 并行压缩
 
-3. 开启 Tree Shaking  webpack-deep-scope-analysis-plugin
+   它会开启多个子进程，把对多个文件的压缩工作分配给多个子进程去完成，每个子进程其实还是通过 UglifyJS 去压缩代码，但是变成了并行执行。 所以 ParallelUglifyPlugin 能更快的完成对多个文件的压缩工作。
 
-  Tree Shaking原理：
-  
-  1. ES6的模块引入是静态分析的，故而可以在编译时正确判断到底加载了什么代码。
+3. 开启 Tree Shaking （webpack-deep-scope-analysis-plugin）
 
-  2. 分析程序流，判断哪些变量未被使用、引用，进而删除此代码。
+    Tree Shaking原理：
+    
+    ES6的模块引入是静态分析的，故而可以在编译时正确判断到底加载了什么代码。分析程序流，判断哪些变量未被使用、引用，进而删除此代码。
 
 4. 提取公共代码 CommonsChunkPlugin
 
@@ -146,4 +148,4 @@ function __webpack_require__(moduleId) {
    
 6. 开启 Scope Hoisting (作用于提升)
 
-  Scope Hoisting 的实现原理其实很简单：分析出模块之间的依赖关系，尽可能的把打散的模块合并到一个函数中去，但前提是不能造成代码冗余。 因此只有那些被引用了一次的模块才能被合并。
+    Scope Hoisting 的实现原理其实很简单：分析出模块之间的依赖关系，尽可能的把打散的模块合并到一个函数中去，但前提是不能造成代码冗余。 因此只有那些被引用了一次的模块才能被合并。

@@ -2,11 +2,13 @@
 
 ## 为什么要有 EventLoop?
 
-因为 Javascript 设计之初就是一门单线程语言，因此为了实现主线程的不阻塞，Event Loop 这样的方案应运而生。
+因为 Javascript 设计之初就是一门单线程语言，也就是说它只有一个调用栈，也就是说JS引擎在同一时间只能做一件事。
+
+所以为了让异步任务不阻塞主线程，浏览器就引入了 EventLoop ，其作用就是将执行JS代码所产生的异步任务在适当的时候推入调用栈中执行。
 
 ## 宏任务与微任务
 
-不同的 API 注册的异步任务会依次进入自身对应的队列中，然后等待 Event Loop 将它们依次压入执行栈中执行。
+不同的 API 注册的异步任务会依次进入自身对应的队列中（task queue 和 microTask queue），然后等待 Event Loop 将它们依次压入执行栈中执行。
 
 异步任务分为两种：
 
@@ -23,8 +25,12 @@
 - queue 可以看做一种数据结构，用以存储需要执行的函数
 - timer 类型的 API（setTimeout/setInterval）注册的函数，等到期后进入 task 队列（这里不详细展开 timer 的运行机制）
 - 其余 API 注册函数直接进入自身对应的 task/microtask 队列
-- Event Loop 执行一次，从 task 队列中拉出一个 task 压入执行栈执行
-- Event Loop 继续检查 microtask 队列是否为空，依次执行直至清空队列
+
+EventLoop 流程：
+
+- Event Loop 执行一次，主线程查询 task 队列是否有任务，从 task 队列中拉出一个 task 压入执行栈执行
+- 执行完一个 task 后，Event Loop 继续检查 microtask 队列是否为空，依次执行直至清空队列
+- 开启下一次 Event Loop，执行期间如果产生新的 task/microtask 则加入相应队列
 
 <img src="/Learning-notes/img/eventloop.png">
 

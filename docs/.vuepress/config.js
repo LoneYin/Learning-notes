@@ -57,7 +57,10 @@ module.exports = {
             "others/模块加载机制",
             "others/前端性能优化",
             "others/面试题整理",
-            "others/最后梳理一遍输入URL到页面渲染的流程"
+            "others/最后梳理一遍输入URL到页面渲染的流程",
+            "others/Webpack知识点整理",
+            "others/Vue与React的区别",
+            "others/Vue源码阅读知识点整理"
           ]
         }
       ],
@@ -67,10 +70,7 @@ module.exports = {
           collapsable: false,
           children: [
             "essay/给ReactRouter添加转场动画",
-            "essay/Vue列表渲染中的key的作用",
-            "essay/vue源码阅读知识点整理",
-            "essay/Webpack知识点整理",
-            "essay/Vue与React的区别",
+            "essay/Vue列表渲染中的key的作用"
           ]
         }
       ]
@@ -83,6 +83,10 @@ module.exports = {
       {
         text: "个人随笔",
         link: "/essays/"
+      },
+      {
+        text: "GitHub",
+        link: "https://github.com/LoneYin/Learning-notes"
       }
     ]
   }
