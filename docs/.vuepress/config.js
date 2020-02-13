@@ -33,20 +33,21 @@ module.exports = {
           collapsable: false,
           children: [
             "advanced/JS执行上下文栈",
-            "advanced/原型链与继承",
-            "advanced/Iterator和Generator",
-            "advanced/Promise",
-            "advanced/节流和防抖",
-            "advanced/函数柯里化",
-            "advanced/bind和call和apply",
             "advanced/另一个角度理解this",
             "advanced/闭包",
-            "advanced/常见算法",
+            "advanced/原型链与继承",
+            "advanced/new运算符",
+            "advanced/节流和防抖",
+            "advanced/函数柯里化",
             "advanced/深拷贝",
+            "advanced/bind和call和apply",
+            "advanced/Iterator和Generator",
+            "advanced/Promise",
             "advanced/单例模式",
             "advanced/观察者模式",
             "advanced/使用setTimeout模拟setInterval",
-            "advanced/new运算符"
+            "advanced/常见算法"
+            
           ]
         },
         {

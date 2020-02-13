@@ -136,14 +136,14 @@ function __webpack_require__(moduleId) {
 
   Tree Shaking原理：
   
-  ES6的模块引入是静态分析的，故而可以在编译时正确判断到底加载了什么代码。
+  1. ES6的模块引入是静态分析的，故而可以在编译时正确判断到底加载了什么代码。
 
-  分析程序流，判断哪些变量未被使用、引用，进而删除此代码。
+  2. 分析程序流，判断哪些变量未被使用、引用，进而删除此代码。
 
 4. 提取公共代码 CommonsChunkPlugin
 
-5. 按需加载  调用 Webpack 的 import 方法
+5. 按需加载 调用 Webpack 的 import 方法
    
-6. 开启 Scope Hoisting
+6. 开启 Scope Hoisting (作用于提升)
 
   Scope Hoisting 的实现原理其实很简单：分析出模块之间的依赖关系，尽可能的把打散的模块合并到一个函数中去，但前提是不能造成代码冗余。 因此只有那些被引用了一次的模块才能被合并。
