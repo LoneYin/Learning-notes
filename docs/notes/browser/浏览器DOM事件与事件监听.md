@@ -162,6 +162,7 @@ if (document.implementation.hasFeature("CustomEvents", "3.0")) {
   // console: 打印body元素
   document.body.addEventListener("click", hide, false);
   ```
+- **Event.relatedTarget**: 对于 mouseover/mouseout 有用，指的是鼠标over时离开的目标/鼠标out时进入的目标，对于其他事件则没有意义
 
 - **Event.eventPhase**  指示事件流正在处理哪个阶段。
 
