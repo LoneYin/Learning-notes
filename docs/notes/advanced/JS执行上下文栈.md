@@ -30,9 +30,7 @@ JavaScript 解释阶段便会确定作用域规则，因此作用域在函数定
 
 其实很简单，就三种，全局代码、函数代码、eval 代码。
 
-举个例子，当执行到一个函数的时候，就会进行准备工作，这里的“准备工作”，让我们用个更专业一点的说法，就叫做"执行上下文(execution context)"。
-
-执行上下文对应三种可执行代码：
+而执行上下文就是代码的运行时环境，分为以下三种，分别对应三种可执行代码：
 
 - 全局执行上下文：只有一个，浏览器中的全局对象就是 window 对象，this 指向这个全局对象。
 
@@ -96,6 +94,108 @@ ECStack.pop();
 // javascript接着执行下面的代码，但是ECStack底层永远有个GlobalContext
 ```
 
+## 建立执行上下文
+
+函数执行时就会创建一个执行上下文，而执行上下文的建立阶段完成了**词法环境**和**变量环境**的创建和 this 的绑定
+
+### This Binding
+
+在全局执行上下文中，this 的值指向全局对象，在浏览器中，this 的值指向 window 对象。
+
+在函数执行上下文中，this 的值取决于函数的调用方式。如果它被一个对象引用调用，那么 this 的值被设置为该对象，否则 this 的值被设置为全局对象或 undefined（严格模式下）。
+
+### 词法环境（Lexical Environment）
+
+词法环境是一个包含标识符变量映射的结构。（这里的标识符表示变量/函数的名称，变量是对实际对象【包括函数类型对象】或原始值的引用）
+
+在词法环境中，有两个组成部分：
+
+1. **环境记录（environment record）**，环境记录是存储变量和函数声明的实际位置（可以理解为变量对象）。
+2. **对外部环境的引用**，对外部环境的引用意味着它可以访问其外部词法环境（可以理解为作用域链中的链）。
+
+对于函数环境而言，环境记录 还包含了一个 arguments 对象，该对象包含了索引和传递给函数的参数之间的映射以及传递给函数的参数的长度（数量）。
+
+环境记录 同样有两种类型： 
+
+1. **声明性环境记录**，存储变量、函数和参数。一个函数环境包含声明性环境记录。
+2. **对象环境记录** 用于定义在全局执行上下文中出现的变量和函数的关联。全局环境包含对象环境记录。
+
+### 变量环境（Variable Environment）
+
+和词法环境的定义基本类似，他们的区别在于：
+
+> 在 ES6 中，Lexical Environment 组件和 Variable Environment 组件的区别在于前者用于存储函数声明和变量（ let 和 const ）绑定，而后者仅用于存储变量（ var ）绑定。
+
+结合代码理解词法环境与变量环境：
+
+```js
+let a = 20;  
+const b = 30;  
+var c;
+
+function multiply(e, f) {  
+ var g = 20;  
+ return e * f * g;  
+}
+
+c = multiply(20, 30);
+```
+
+执行上下文如下所示：
+
+```js
+GlobalExectionContext = {
+
+  ThisBinding: <Global Object>,
+
+  LexicalEnvironment: {  
+    EnvironmentRecord: {  
+      Type: "Object",  
+      // 标识符绑定在这里  
+      a: < uninitialized >,  
+      b: < uninitialized >,  
+      multiply: < func >  
+    }  
+    outer: <null>  
+  },
+
+  VariableEnvironment: {  
+    EnvironmentRecord: {  
+      Type: "Object",  
+      // 标识符绑定在这里  
+      c: undefined,  
+    }  
+    outer: <null>  
+  }  
+}
+
+FunctionExectionContext = {  
+   
+  ThisBinding: <Global Object>,
+
+  LexicalEnvironment: {  
+    EnvironmentRecord: {  
+      Type: "Declarative",  
+      // 标识符绑定在这里  
+      Arguments: {0: 20, 1: 30, length: 2},  
+    },  
+    outer: <GlobalLexicalEnvironment>  
+  },
+
+  VariableEnvironment: {  
+    EnvironmentRecord: {  
+      Type: "Declarative",  
+      // 标识符绑定在这里  
+      g: undefined  
+    },  
+    outer: <GlobalLexicalEnvironment>  
+  }  
+}
+```
+
+******
+以下内容是 ES3 的概念
+
 ## 执行上下文里的重要属性
 
 - 变量对象(Variable object，VO)
@@ -140,6 +240,7 @@ ECStack.pop();
    - 如果变量对象已经存在相同名称的属性，则完全替换这个属性（变量声明无法覆盖函数声明）
 
 3. 变量声明
+
    - 由名称和对应值（undefined）组成一个变量对象的属性被创建；
    - 如果变量名称跟已经声明的形式参数或函数相同，则变量声明不会干扰已经存在的这类属性
 
