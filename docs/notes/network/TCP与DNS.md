@@ -12,7 +12,7 @@
 
 ### TCP/UDP 的区别
 
-<img src="/img/tcp-udp.jpg">
+<img src="/Learning-notes/img/tcp-udp.jpg">
 
 ## TCP
 
